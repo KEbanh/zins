@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<title>Währungsrechner</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script>
+"use strict";
+
+function fWertetabelle() {
+
+var vStart;
+var vAusgabe="";
+var vStop=0;
+var vEnde;
+var vZins;
+var vJahre;
+var vZinsen;
+var vZinsSumme=0;
+vStart = parseFloat(document.getElementById("idStart").value);
+vJahre = document.getElementById("idJahre").value;
+vZins = parseFloat(document.getElementById("idZins").value/100);
+vZinsSumme=parseFloat(vZinsSumme);
+vAusgabe = vAusgabe + "<table border=2>"
+vAusgabe = vAusgabe + "<tr><th>"+"Jahr"+"</th><th>"+"Jahresstartkapital"+"</th><th>"+"Zinsen"+"</th><th>"+"Jahresendkapital"+"</th></tr>"
+
+while (vStop<=vJahre) {
+
+vZinsen = vZins * vStart
+vEnde = vZinsen + vStart;
+
+//Aufsummieren der Zinsen
+vZinsSumme=vZinsSumme + vZinsen;
+
+if (vZinsen>=22.50)
+{vAusgabe = vAusgabe + "<tr Style=background-color:green><th>"+vStop+"</th><th>"+ vStart.toFixed(2) + " € " + "</th><th>"+ vZinsen.toFixed(2) + " €"+"</th><th>"+ vEnde.toFixed(2) + " €"+"</th></tr>"}
+else
+{vAusgabe = vAusgabe + "<tr><th>"+vStop+"</th><th>"+ vStart.toFixed(2) + " € " + "</th><th>"+ vZinsen.toFixed(2) + " € "+"</th><th>"+ vEnde.toFixed(2) + " €"+"</th></tr>"}
+vStart = vEnde
+vStop = vStop + 1
+}
+vAusgabe = vAusgabe + "</table></br>"
+
+vAusgabe = vAusgabe + "Gesamtzinsen nach Laufzeit: "+ vZinsSumme.toFixed(2) + " € ";
+document.getElementById("idAusgabe").innerHTML = vAusgabe;
+
+}
+
+</script>
+</head>
+
+<body>
+<h1>Zinseszins-Rechner</h1>
+
+Startkapital
+<input id="idStart" type="text" value="1000" maxlength="50" size="5"> €</br></br>
+--------------------------------------------------------------</br>
+Zinssatz
+<input id="idZins" type="text" value="2" maxlength="50" size="5"> %</br>
+Laufzeit
+<input id="idJahre" type="text" value="10" maxlength="50" size="5"> Jahre</br></br>
+<button OnClick="fWertetabelle();">Zinsen berechnen</button></br></br>
+<div id="idAusgabe"></div>
+
+</body>
+</html>
